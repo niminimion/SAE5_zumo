@@ -4,18 +4,14 @@
 #include "asserv.h"
 #include "hal.h"
 #include "sim.h"
+#include "ihm.h"
 
 
 void setup() {
   Serial.begin(115200);
   sim_calibration();
   asserv_init();
-  capteurs_lire(brut);
-  /*Serial.print("linge detecter? "); Serial.println(ligne_detectee(valeur));
-  Serial.print("test1 = "); Serial.println(ligne_position(valeur));
-
-  Serial.print("test2 = "); Serial.println(ligne_position(test2));
-  Serial.print("test3 = "); Serial.println(ligne_position(test3));*/
+  ihm_init();
 }
 
 void loop() {
@@ -23,7 +19,8 @@ void loop() {
   Serial.print(">vitesse_d:"); Serial.println(vitesse_d);
   Serial.print(">consigne_d:");  Serial.println(consigne_d);
   Serial.print(">consigne_g:");  Serial.println(consigne_g);
-  Serial.print(">u_g:"); Serial.println(u_g);  
+  Serial.print(">u_g:"); Serial.println(u_g);
+
   delay(20);
 }
 

@@ -3,8 +3,8 @@
 #include "capteur.h"
 #include "pid.h"
 #include "hal.h"
+#include "board.h"
 
-#define TIMER_ASSERV  TIM11 
 HardwareTimer *timer = new HardwareTimer(TIMER_ASSERV);
 
 //               {    P     ,      I    ,    D     ,   ts     , integral, erreur precident }
@@ -42,7 +42,9 @@ void suivre_ligne(int vitesse, float valeur[NB_capteurs] ){
 
 void asservissement() {
   capteurs_normaliser(brut, valeur);
+  capteurs_lire(brut);
   suivre_ligne(vitesse,valeur);
+
 
   vitesse_g = encodeur_g();
   u_g = pid_calcul(pid_g, consigne_g, vitesse_g);

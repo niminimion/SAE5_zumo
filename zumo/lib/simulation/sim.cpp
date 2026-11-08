@@ -1,10 +1,15 @@
 #include "sim.h"
+#include <Arduino.h>
+#include "board.h"
+#include <stdint.h>
 //============================================================
 //variable capteurs (simulation)
 //============================================================
-int test1[NB_capteurs] = {0, 0, 5000,5000, 0, 0}; 
-float test2[NB_capteurs] = {0, 0, 500, 500, 0, 0}; 
-float test3[NB_capteurs] = {1000, 1000, 0, 0, 0, 0}; 
+uint32_t a = 0;
+uint32_t b = 5000;
+int test1[NB_capteurs] = {0, a, 5000,b, 0, 0}; 
+int test2[NB_capteurs] = {0, 5000, 5000, 0, 0, 0}; 
+int test3[NB_capteurs] = {0, 0, 0, 5000, 5000, 0}; 
 
 int blanc[NB_capteurs] = {500, 400, 400, 300, 210, 270};
 int noir[NB_capteurs] = {5000, 4020, 4040, 5300, 6210, 4270};
@@ -22,7 +27,24 @@ void sim_calibration(){
 }
 
 void capteurs_lire(int brut[NB_capteurs]){
-    for (int i = 0; i < NB_capteurs; i++) brut[i] = test1[i];
+    for (int i = 0; i < NB_capteurs; i++) {
+        brut[0] = 0;
+        brut[1] = a;
+        brut[2] = 5000;
+        brut[3] = b;
+        brut[4] = 0;
+        brut[5] = 0;
+
+    }
+    if (digitalRead(BP1) == 0 ){
+        if (a<5000) a+=50;
+        if (b>0) b-=50;
+    }
+    else if (digitalRead(BP1) == 1 ){
+        if (b<5000) b+=50;
+        if (a>0) a-=50;
+        
+    }
 }
 
 
