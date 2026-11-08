@@ -2,13 +2,15 @@
 #include "pid.h"
 #include "capteur.h"
 #include "asserv.h"
+#include "hal.h"
 #include "sim.h"
+
 
 void setup() {
   Serial.begin(115200);
   sim_calibration();
   asserv_init();
-  sim_lire_capteurs(brut);
+  capteurs_lire(brut);
   /*Serial.print("linge detecter? "); Serial.println(ligne_detectee(valeur));
   Serial.print("test1 = "); Serial.println(ligne_position(valeur));
 

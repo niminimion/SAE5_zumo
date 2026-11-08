@@ -11,7 +11,6 @@ extern volatile float correction;
 extern volatile float u_g;  
 extern int brut[NB_capteurs];
 
-
 void asserv_init();
 
 #endif

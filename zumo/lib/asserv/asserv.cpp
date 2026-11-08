@@ -2,6 +2,7 @@
 #include "asserv.h"
 #include "capteur.h"
 #include "pid.h"
+#include "hal.h"
 
 #define TIMER_ASSERV  TIM11 
 HardwareTimer *timer = new HardwareTimer(TIMER_ASSERV);
@@ -32,7 +33,6 @@ volatile float correction = 0;
 volatile float consigne_d;
 volatile float consigne_g;
 
-
 void suivre_ligne(int vitesse, float valeur[NB_capteurs] ){
   float position = ligne_position(valeur);
   correction = pid_calcul(pid_suivre,consigne_suivre,position);
@@ -44,14 +44,15 @@ void asservissement() {
   capteurs_normaliser(brut, valeur);
   suivre_ligne(vitesse,valeur);
 
+  vitesse_g = encodeur_g();
   u_g = pid_calcul(pid_g, consigne_g, vitesse_g);
-  vitesse_g = vitesse_g + 0.083f * (0.6f * u_g - vitesse_g);   // calcul de la vitesse du moteur gauche
+  moteur_g(u_g);
 
+  vitesse_d = encodeur_d();
   u_d = pid_calcul(pid_d, consigne_d, vitesse_d);
-  vitesse_d = vitesse_d + 0.083f * (1.0f *u_d - vitesse_d);   // calcul de la vitesse du moteur droit
+  moteur_d(u_d);
   
 }
-
 
 void asserv_init(){
     timer->setOverflow(200, HERTZ_FORMAT);     // set timer to overflow every 5 ms (200 Hz)

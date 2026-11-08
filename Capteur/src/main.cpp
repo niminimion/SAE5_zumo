@@ -1,9 +1,12 @@
 #include <Arduino.h>
 #include "capteur.h"
+#include <stdint.h> 
 
 float valeur[NB_capteurs] = {0, 0, 0, 0, 0, 0}; // tableau pour stocker les valeurs lues par les capteurs
 int blanc[NB_capteurs] = {500, 400, 400, 300, 210, 270};
 int noir[NB_capteurs] = {5000, 4020, 4040, 5300, 6210, 4270};
+
+
 
 void setup() {
   Serial.begin(9600);
@@ -23,9 +26,11 @@ void setup() {
   Serial.print("linge detecter? "); Serial.println(ligne_detectee(valeur));
   Serial.print("test1 = "); Serial.println(ligne_position(valeur));
 
-
   Serial.print("test2 = "); Serial.println(ligne_position(test2));
   Serial.print("test3 = "); Serial.println(ligne_position(test3));
+
+
+  
 }
 
 void loop() {
