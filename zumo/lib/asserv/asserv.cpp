@@ -3,7 +3,7 @@
 #include "capteur.h"
 #include "pid.h"
 #include "hal.h"
-#include "board.h"
+#include "pin.h"
 
 HardwareTimer *timer = new HardwareTimer(TIMER_ASSERV);
 

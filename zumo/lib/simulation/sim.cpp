@@ -1,7 +1,8 @@
 #include "sim.h"
 #include <Arduino.h>
-#include "board.h"
+#include "pin.h"
 #include <stdint.h>
+
 //============================================================
 //variable capteurs (simulation)
 //============================================================
@@ -36,17 +37,16 @@ void capteurs_lire(int brut[NB_capteurs]){
         brut[5] = 0;
 
     }
-    if (digitalRead(BP1) == 0 ){
+    if (digitalRead(BP2) == 0 ){
         if (a<5000) a+=50;
         if (b>0) b-=50;
     }
-    else if (digitalRead(BP1) == 1 ){
+    else if (digitalRead(BP2) == 1 ){
         if (b<5000) b+=50;
         if (a>0) a-=50;
         
     }
 }
-
 
 //============================================================
 //simulation moteur & endodeur

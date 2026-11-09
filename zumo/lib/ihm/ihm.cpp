@@ -1,7 +1,7 @@
 #include "ihm.h"
-#include "board.h"
+#include "pin.h"
 #include <Arduino.h>
 
 void ihm_init(){
-    pinMode(BP1,INPUT);
+    pinMode(BP2,INPUT);
 }
