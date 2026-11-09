@@ -4,4 +4,5 @@
 
 void ihm_init(){
     pinMode(BP2,INPUT);
+    
 }

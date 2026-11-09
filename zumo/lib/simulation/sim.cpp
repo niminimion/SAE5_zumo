@@ -1,3 +1,4 @@
+#if SIMULATION
 #include "sim.h"
 #include <Arduino.h>
 #include "pin.h"
@@ -28,7 +29,7 @@ void sim_calibration(){
 }
 
 void capteurs_lire(int brut[NB_capteurs]){
-    for (int i = 0; i < NB_capteurs; i++) {
+    
         brut[0] = 0;
         brut[1] = a;
         brut[2] = 5000;
@@ -36,7 +37,7 @@ void capteurs_lire(int brut[NB_capteurs]){
         brut[4] = 0;
         brut[5] = 0;
 
-    }
+    
     if (digitalRead(BP2) == 0 ){
         if (a<5000) a+=50;
         if (b>0) b-=50;
@@ -66,3 +67,5 @@ float encodeur_g(){
 float encodeur_d(){
     return vitesse_sim_d;
 }
+
+#endif

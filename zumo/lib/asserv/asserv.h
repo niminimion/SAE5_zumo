@@ -10,7 +10,7 @@ extern volatile float consigne_d;
 extern volatile float correction;
 extern volatile float u_g;  
 extern int brut[NB_capteurs];
-
+extern float valeur[NB_capteurs];
 void asserv_init();
 
 #endif

@@ -1,12 +1,11 @@
 #include "capteur.h"
+#include <Arduino.h>
 
 const float seuils =300;
 
-float valuer_max[NB_capteurs] = {0,0,0,0,0,0};
-float valuer_min[NB_capteurs] = {0,0,0,0,0,0};
+static int cal_min[NB_capteurs];   //valeur min vu
+static int cal_max[NB_capteurs];   //valeur max vu
 
-static int cal_min[6];   //valeur min vu
-static int cal_max[6];   //valeur max vu
 
 float ligne_position(float valeur[NB_capteurs]){
   static float position_prec = 0;
@@ -49,6 +48,7 @@ void calibration_reset(){
 }
 
 void calibration(int brut[NB_capteurs]){
+
   for (int i = 0; i < NB_capteurs; i++) {
     if (cal_min[i] > brut[i]) cal_min[i] = brut[i];
     if (cal_max[i] < brut[i]) cal_max[i] = brut[i];

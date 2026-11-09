@@ -5,13 +5,16 @@
 #include "hal.h"
 #include "sim.h"
 #include "ihm.h"
+#include "pin.h"
+#include "hardware.h"
 
 
 void setup() {
   Serial.begin(115200);
-  sim_calibration();
-  asserv_init();
+  calibration_reset();
   ihm_init();
+  hardware_init();
+  asserv_init();
 }
 
 void loop() {
@@ -21,6 +24,19 @@ void loop() {
   Serial.print(">consigne_g:");  Serial.println(consigne_g);
   Serial.print(">u_g:"); Serial.println(u_g);
 
+  static int avant = HIGH;              
+  int maintenant = digitalRead(BP2);    
+
+
+  if (avant == HIGH && maintenant == LOW) {
+      calibration_reset();
+  }
+
+  if (maintenant == LOW) {
+      calibration(brut);
+  }
+  avant = maintenant;
+    
   delay(20);
 }
 

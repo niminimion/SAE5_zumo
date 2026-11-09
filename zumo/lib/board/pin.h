@@ -1,5 +1,5 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef PIN_H
+#define PIN_H
 
 #include <Arduino.h>
 #include <stdint.h>
@@ -18,6 +18,7 @@
 //==========capteurs============
 const uint32_t CAPT[NB_capteurs] = {PA4, PB0, PC1, PC0, PA6, PA7};
 //                                  OUT1 OUT2 OUT3 OUT4 OUT5 OUT6
+#define Mosfet         PC7
 
 //==========moteurs=============
 #define AIN1           PA8
