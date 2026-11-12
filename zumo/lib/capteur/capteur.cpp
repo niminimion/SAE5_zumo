@@ -17,15 +17,22 @@ struct CalibFlash {
 };
 const uint32_t CALIB_MAGIC = 0x20261111; 
 
-void calibration_sauvegarder(){
+void calibration_sauvegarder() {
   CalibFlash data;
   data.magic = CALIB_MAGIC;
   for (int i = 0; i < NB_capteurs; i++) {
-        data.min[i] = cal_min[i];         
-        data.max[i] = cal_max[i];          
-    }
+    data.min[i] = cal_min[i];
+    data.max[i] = cal_max[i];
+  }
 
-  EEPROM.put(0, data); 
+  eeprom_buffer_fill();                            // copie la flash dans le buffer RAM
+
+  uint8_t *p = (uint8_t *)&data;                   //  data vu comme une suite d'octets
+  for (unsigned int i = 0; i < sizeof(data); i++) {
+    eeprom_buffered_write_byte(i, p[i]);           //  écrit dans le buffer RAM (rapide)
+  }
+
+  eeprom_buffer_flush();                           //  écrit le buffer dans la flash (1 fois)
 }
 
 bool calibration_charger() {
@@ -42,6 +49,18 @@ bool calibration_charger() {
         cal_max[i] = data.max[i];
     }
     return true;                          
+}
+
+void calibration_afficher(){
+  Serial.println("Calibration :");
+  for (int i = 0; i < NB_capteurs; i++) {
+    Serial.print("Capteur ");
+    Serial.print(i);
+    Serial.print(": min=");
+    Serial.print(cal_min[i]);
+    Serial.print(", max=");
+    Serial.println(cal_max[i]);
+  }
 }
 
 //============================================================

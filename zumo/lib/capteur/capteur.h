@@ -17,5 +17,6 @@ bool ligne_detectee(float valeur[NB_capteurs]);
 
 void calibration_sauvegarder();
 bool calibration_charger();
+void calibration_afficher();
 
 #endif

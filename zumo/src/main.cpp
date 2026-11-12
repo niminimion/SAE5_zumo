@@ -17,14 +17,15 @@ void setup() {
   if (calibration_charger())  Serial.println("Calibration chargee depuis la flash");
   else                        Serial.println("Pas de calibration : appuyez sur B1");
   asserv_init();
+  calibration_afficher();
 }
 
 void loop() {
-  Serial.print(">vitesse_g:"); Serial.println(vitesse_g);
+  /*Serial.print(">vitesse_g:"); Serial.println(vitesse_g);
   Serial.print(">vitesse_d:"); Serial.println(vitesse_d);
   Serial.print(">consigne_d:");  Serial.println(consigne_d);
   Serial.print(">consigne_g:");  Serial.println(consigne_g);
-  Serial.print(">u_g:"); Serial.println(u_g);
+  Serial.print(">u_g:"); Serial.println(u_g);*/
 
   static int avant = HIGH;              
   int maintenant = digitalRead(BP2);    
@@ -34,7 +35,11 @@ void loop() {
 
   if (maintenant == LOW) calibration(brut);
 
-  if (avant == HIGH && maintenant == LOW) calibration_sauvegarder();
+  if (avant == LOW && maintenant == HIGH) {                         // relâché
+  //calibration_sauvegarder();
+  Serial.println("Calibration sauvegardee");
+  calibration_afficher();
+  }
 
   avant = maintenant;
     
