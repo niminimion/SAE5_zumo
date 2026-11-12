@@ -1,12 +1,52 @@
 #include "capteur.h"
 #include <Arduino.h>
+#include <EEPROM.h>
 
 const float seuils =300;
 
 static int cal_min[NB_capteurs];   //valeur min vu
 static int cal_max[NB_capteurs];   //valeur max vu
 
+//============================================================
+//Stocker les données de calibration dans flash
+//============================================================
+struct CalibFlash {
+  uint32_t magic;           // valeur magique pour vérifier la validité des données
+  int min[NB_capteurs];
+  int max[NB_capteurs];
+};
+const uint32_t CALIB_MAGIC = 0x20261111; 
 
+void calibration_sauvegarder(){
+  CalibFlash data;
+  data.magic = CALIB_MAGIC;
+  for (int i = 0; i < NB_capteurs; i++) {
+        data.min[i] = cal_min[i];         
+        data.max[i] = cal_max[i];          
+    }
+
+  EEPROM.put(0, data); 
+}
+
+bool calibration_charger() {
+    CalibFlash data;                      
+
+    EEPROM.get(0, data);                  // Lire les données de calibration depuis l'EEPROM
+
+    if (data.magic != CALIB_MAGIC) {      // Vérifier la valeur magique pour s'assurer que les données sont valides
+        return false;                     
+    }
+
+    for (int i = 0; i < NB_capteurs; i++) {
+        cal_min[i] = data.min[i];         
+        cal_max[i] = data.max[i];
+    }
+    return true;                          
+}
+
+//============================================================
+//Calculer la position de la ligne en fonction des valeurs lues par les capteurs
+//============================================================
 float ligne_position(float valeur[NB_capteurs]){
   static float position_prec = 0;
   float numerateur = 0; // la somme des produits capteur * valeur lue
@@ -69,3 +109,4 @@ bool ligne_detectee(float valeur[NB_capteurs]){
   if (somme > seuils) return true;
   else return false;
 }
+

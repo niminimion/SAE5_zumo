@@ -15,4 +15,7 @@ void calibration(int brut[NB_capteurs]);
 void capteurs_normaliser(int brut[NB_capteurs], float valeur[NB_capteurs]);
 bool ligne_detectee(float valeur[NB_capteurs]);
 
+void calibration_sauvegarder();
+bool calibration_charger();
+
 #endif

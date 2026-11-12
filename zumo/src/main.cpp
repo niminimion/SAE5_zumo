@@ -14,6 +14,8 @@ void setup() {
   calibration_reset();
   ihm_init();
   hardware_init();
+  if (calibration_charger())  Serial.println("Calibration chargee depuis la flash");
+  else                        Serial.println("Pas de calibration : appuyez sur B1");
   asserv_init();
 }
 
@@ -28,13 +30,12 @@ void loop() {
   int maintenant = digitalRead(BP2);    
 
 
-  if (avant == HIGH && maintenant == LOW) {
-      calibration_reset();
-  }
+  if (avant == HIGH && maintenant == LOW) calibration_reset();
 
-  if (maintenant == LOW) {
-      calibration(brut);
-  }
+  if (maintenant == LOW) calibration(brut);
+
+  if (avant == HIGH && maintenant == LOW) calibration_sauvegarder();
+
   avant = maintenant;
     
   delay(20);
