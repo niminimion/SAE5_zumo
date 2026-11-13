@@ -1,6 +1,6 @@
 #if !SIMULATION
 
-#include "hardware.h"
+#include "hal.h"
 #include "pin.h"
 #include <Arduino.h>
 

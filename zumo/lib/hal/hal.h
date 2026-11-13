@@ -3,6 +3,10 @@
 
 #include "capteur.h"
 
+void hardware_init();
+
+void sim_calibration();
+
 void capteurs_lire(int brut[NB_capteurs]);
 void moteur_g(float u);
 void moteur_d(float u);

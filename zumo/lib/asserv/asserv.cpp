@@ -4,6 +4,7 @@
 #include "pid.h"
 #include "hal.h"
 #include "pin.h"
+#include "fsm.h"
 
 HardwareTimer *timer = new HardwareTimer(TIMER_ASSERV);
 
@@ -41,18 +42,37 @@ void suivre_ligne(int vitesse, float valeur[NB_capteurs] ){
 }
 
 void asservissement() {
-  capteurs_normaliser(brut, valeur);
+
   capteurs_lire(brut);
-  suivre_ligne(vitesse,valeur);
 
+  if (etat == CALIBRATION){
+    calibration(brut);
+    moteur_g(0);
+    moteur_d(0);
+    //que pour simulation
+    vitesse_g = 0;
+    vitesse_d = 0;
+  } 
+  else if (etat == SUIVI) {
+    capteurs_normaliser(brut, valeur);
+    suivre_ligne(vitesse,valeur);
+    vitesse_g = encodeur_g();
+    u_g = pid_calcul(pid_g, consigne_g, vitesse_g);
+    moteur_g(u_g);
 
-  vitesse_g = encodeur_g();
-  u_g = pid_calcul(pid_g, consigne_g, vitesse_g);
-  moteur_g(u_g);
+    vitesse_d = encodeur_d();
+    u_d = pid_calcul(pid_d, consigne_d, vitesse_d);
+    moteur_d(u_d);
+  }
+  else{
+    moteur_g(0);
+    moteur_d(0);
+    //que pour simulation
+    vitesse_g = 0;
+    vitesse_d = 0;
 
-  vitesse_d = encodeur_d();
-  u_d = pid_calcul(pid_d, consigne_d, vitesse_d);
-  moteur_d(u_d);
+  }
+
   
 }
 

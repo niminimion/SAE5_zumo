@@ -1,5 +1,5 @@
 #if SIMULATION
-#include "sim.h"
+#include "hal.h"
 #include <Arduino.h>
 #include "pin.h"
 #include <stdint.h>
@@ -67,5 +67,9 @@ float encodeur_g(){
 float encodeur_d(){
     return vitesse_sim_d;
 }
+
+void hardware_init(){
+}
+
 
 #endif
