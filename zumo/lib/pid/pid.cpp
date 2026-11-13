@@ -1,5 +1,11 @@
 #include "pid.h"
 
+void pid_reset(PID &pid){
+  pid.integral = 0;
+  pid.erreur_prec = 0;
+
+}
+
 float pid_calcul(PID &pid, float consigne, float mesure) {
   float erreur = consigne - mesure;                                     // calcul de l'erreur
   float p = pid.kp * erreur;                                      // calcul de la puissance du moteur

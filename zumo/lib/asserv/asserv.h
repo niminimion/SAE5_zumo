@@ -12,5 +12,6 @@ extern volatile float u_g;
 extern int brut[NB_capteurs];
 extern float valeur[NB_capteurs];
 void asserv_init();
+void asserv_reset();
 
 #endif

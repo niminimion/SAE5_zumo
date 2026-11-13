@@ -13,9 +13,7 @@ void mode_calibration (){
     calibration_reset();
     etat = CALIBRATION;
     Serial.println("etat : CALIBRATION");
-
 }
-
 
 void setup() {
   Serial.begin(115200);
@@ -42,7 +40,6 @@ void loop() {
   Serial.print(">etat:"); Serial.println(etat);
   Serial.print(">u_g:"); Serial.println(u_g);
 
-
   EvtBouton evt = bouton_evenement();
   switch (etat) {
     case ATTENTE:
@@ -54,13 +51,13 @@ void loop() {
         // calibration_sauvegarder();
         //calibration_afficher();
         etat = PRET;
-        Serial.println("etat : CALIBRATION");
+        Serial.println("etat : PRET");
       }
-      
       break;
 
     case PRET:
       if (evt == RELACHE) {
+        asserv_reset();
         etat = SUIVI;
         Serial.println("etat : SUIVI");
       }
@@ -78,12 +75,12 @@ void loop() {
       if (evt == RELACHE) { 
         etat = PRET;
         Serial.println("etat : PRET");
+
       }
       if (evt == LONG_APPUI)  mode_calibration ();
       break;
   }
 
-      
   delay(20);
 }
 

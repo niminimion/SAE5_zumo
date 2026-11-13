@@ -14,5 +14,6 @@ struct PID {
 };
 
 float pid_calcul(PID &pid, float consigne, float mesure);
+void pid_reset(PID &pid);
 
 #endif  

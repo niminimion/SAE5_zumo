@@ -26,6 +26,5 @@ EvtBouton bouton_evenement(){
     if (avant == LOW && maintenant == HIGH && LONG == false) evt = RELACHE;  
     avant = maintenant;
 
-    
     return evt;
 }

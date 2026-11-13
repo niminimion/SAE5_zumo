@@ -50,8 +50,8 @@ void asservissement() {
     moteur_g(0);
     moteur_d(0);
     //que pour simulation
-    vitesse_g = 0;
-    vitesse_d = 0;
+    consigne_g = 0;
+    consigne_d = 0;
   } 
   else if (etat == SUIVI) {
     capteurs_normaliser(brut, valeur);
@@ -68,12 +68,20 @@ void asservissement() {
     moteur_g(0);
     moteur_d(0);
     //que pour simulation
-    vitesse_g = 0;
-    vitesse_d = 0;
-
+    consigne_d = 0;
+    consigne_g = 0;
+    vitesse_d = encodeur_d();
+    vitesse_g = encodeur_g();
   }
 
-  
+}
+
+void asserv_reset(){
+  pid_reset(pid_d);
+  pid_reset(pid_g);
+  pid_reset(pid_suivre);
+  consigne_d = 0;
+  consigne_g = 0;
 }
 
 void asserv_init(){

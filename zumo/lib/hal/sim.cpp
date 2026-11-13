@@ -36,7 +36,6 @@ void capteurs_lire(int brut[NB_capteurs]){
         brut[3] = b;
         brut[4] = 0;
         brut[5] = 0;
-
     
     if (digitalRead(BP2) == 0 ){
         if (a<5000) a+=50;
